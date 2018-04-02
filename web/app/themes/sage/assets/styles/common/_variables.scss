@@ -1,0 +1,28 @@
+// Glyphicons font path
+$icon-font-path:        "../fonts/";
+
+// Grid settings
+$main-sm-columns:       12;
+$sidebar-sm-columns:    4;
+
+// Colors
+$brand-primary:         #b91f1f;
+$color-link:            #db1919;
+$color-link-hover:      #5e75a6;
+$color-li-hover:        #eee;
+$sombra:                 rgba(0, 0, 0, 0.10);
+
+$gray-base:              #000;
+$gray-light-semi:        lighten($gray-base, 80%);
+$gray-super-lighter:     lighten($gray-base, 97%);
+
+$font-family-sans-serif:  RobotoCondensed, sans-serif;
+$font-family-serif:       merriweather, Georgia, serif !default;
+$font-family-base:        $font-family-serif;
+
+$navbar-default-color:  transparent;
+$navbar-default-bg:     transparent;
+
+$screen-lg:             1400px;
+
+$input-border-radius:   0;

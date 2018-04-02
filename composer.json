@@ -30,6 +30,30 @@
     {
       "type": "composer",
       "url": "https://wpackagist.org"
+    },
+    {
+      "type": "package",
+      "package": {
+          "name": "analogmemory/wp-sync-db",
+          "type": "wordpress-plugin",
+          "version": "1.6",
+          "dist": {
+              "type": "zip",
+              "url": "https://github.com/AnalogMemory/wp-sync-db/archive/master.zip"
+          }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+          "name": "wp-sync-db/wp-sync-db-media-files",
+          "type": "wordpress-plugin",
+          "version": "master",
+          "dist": {
+              "type": "zip",
+              "url": "https://github.com/wp-sync-db/wp-sync-db-media-files/archive/master.zip"
+          }
+      }
     }
   ],
   "require": {
@@ -38,7 +62,18 @@
     "vlucas/phpdotenv": "^2.0.1",
     "johnpbloch/wordpress": "4.9.4",
     "oscarotero/env": "^1.1.0",
-    "roots/wp-password-bcrypt": "1.0.0"
+    "roots/wp-password-bcrypt": "1.0.0",
+    "wp-sync-db/wp-sync-db-media-files": "dev-master",
+    "analogmemory/wp-sync-db": "1.6",
+    "wpackagist-plugin/infinite-scroll-and-load-more-ajax-pagination": "*",
+    "wpackagist-plugin/contact-form-7": "*",
+    "wpackagist-plugin/google-analytics-dashboard-for-wp": "*",
+    "wpackagist-plugin/advanced-responsive-video-embedder": "*",
+    "wpackagist-plugin/malinky-ajax-pagination": "*",
+    "wpackagist-plugin/cookie-notice": "*",
+    "wpackagist-plugin/autodescription": "*",
+    "wpackagist-plugin/invisible-recaptcha": "*",
+    "wpackagist-plugin/wp-mail-smtp": "*"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.0.2"

@@ -1,0 +1,89 @@
+// Search form
+.search-form {
+  @extend .form-inline;
+}
+.search-form label {
+  font-weight: normal;
+  @extend .form-group;
+}
+.search-form .search-field {
+  @extend .form-control;
+}
+.search-form .search-submit {
+  @extend .btn;
+  @extend .btn-default;
+}
+
+
+// cambio de color placeholder en focus-----------
+
+input:focus::-webkit-input-placeholder, input:active::-webkit-input-placeholder {
+    color: white !important;
+    background-color: $color-link-hover !important;
+}
+/* Firefox < 19 */
+input:focus:-moz-placeholder, input:active:-moz-placeholder {
+    color: white !important;
+    background-color: $color-link-hover !important;
+}
+/* Firefox > 19 */
+input:focus::-moz-placeholder, input:active::-moz-placeholder {
+    color: white !important;
+    background-color: $color-link-hover !important;
+}
+/* Internet Explorer 10 */
+input:focus:-ms-input-placeholder, input:active:-ms-input-placeholder {
+    color: white !important;
+    background-color: $color-link-hover !important;
+}
+
+
+
+
+
+input:focus, textarea:focus {
+    color: white !important;
+    background-color: $color-link-hover !important;
+}
+
+
+
+
+
+
+
+// Resetear input focus
+
+textarea:focus,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
+.uneditable-input {
+  border: none !important;
+  box-shadow: none !important;
+  outline: 0 none !important;
+  border-radius: 0 !important;
+  &:focus {
+    border: none !important;
+    box-shadow: none !important;
+    outline: 0 none !important;
+  }
+}
+
+textarea {
+  border: none !important;
+  &focus {
+    background-color: $brand-primary !important;
+  }
+}
