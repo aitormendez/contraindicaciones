@@ -67,8 +67,6 @@
     "analogmemory/wp-sync-db": "1.6",
     "wpackagist-plugin/infinite-scroll-and-load-more-ajax-pagination": "*",
     "wpackagist-plugin/contact-form-7": "*",
-    "wpackagist-plugin/google-analytics-dashboard-for-wp": "*",
-    "wpackagist-plugin/advanced-responsive-video-embedder": "*",
     "wpackagist-plugin/malinky-ajax-pagination": "*",
     "wpackagist-plugin/cookie-notice": "*",
     "wpackagist-plugin/autodescription": "*",
