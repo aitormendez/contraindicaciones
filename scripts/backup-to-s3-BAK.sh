@@ -5,7 +5,7 @@ SITE="${DB_USER//_/.}"
 ENVIRONMENT="$WP_ENV"
 TIMESTAMP=`env TZ=Europe/Madrid date +%Y-%m-%d-%H%M`
 ARCHIVE_PATH=/tmp/$SITE-$ENVIRONMENT-$TIMESTAMP
-ARCHIVE_FILENAME=$SITE-$ENVIRONMENT.tar.gz
+ARCHIVE_FILENAME=$SITE-$ENVIRONMENT-$TIMESTAMP.tar.gz
 mkdir -p $ARCHIVE_PATH &&
 cd /srv/www/$SITE/current && wp db export $ARCHIVE_PATH/db.sql &&
 rsync -kavzP --exclude web/wp/ --exclude web/wp-config.php /srv/www/$SITE/current/web $ARCHIVE_PATH &&
