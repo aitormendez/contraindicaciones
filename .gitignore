@@ -6,11 +6,12 @@ web/app/upgrade
 web/app/uploads/*
 !web/app/uploads/.gitkeep
 
-.DS_Store
-
 # WordPress
 web/wp
 web/.htaccess
+
+# Logs
+*.log
 
 # Dotenv
 .env
@@ -18,5 +19,7 @@ web/.htaccess
 !.env.example
 
 # Composer
-vendor/*
-!vendor/.gitkeep
+/vendor
+
+# WP-CLI
+wp-cli.local.yml
