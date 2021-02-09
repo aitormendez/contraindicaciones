@@ -16,7 +16,7 @@ require('laravel-mix-copy-watched');
 
 mix
   .setPublicPath('./dist')
-  .browserSync('sage.test');
+  .browserSync('contraindicaciones.test');
 
 mix
   .sass('resources/assets/styles/app.scss', 'styles')
