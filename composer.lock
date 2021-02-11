@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f116e2497906b0e43813329f7f542113",
+    "content-hash": "8a191c2dd2798aa7d0a822a9a8e1eff4",
     "packages": [
         {
             "name": "advanced-custom-fields/advanced-custom-fields-pro",
@@ -177,101 +177,6 @@
             "time": "2021-01-14T11:07:16+00:00"
         },
         {
-            "name": "doctrine/inflector",
-            "version": "2.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/doctrine/inflector.git",
-                "reference": "9cf661f4eb38f7c881cac67c75ea9b00bf97b210"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/inflector/zipball/9cf661f4eb38f7c881cac67c75ea9b00bf97b210",
-                "reference": "9cf661f4eb38f7c881cac67c75ea9b00bf97b210",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.2 || ^8.0"
-            },
-            "require-dev": {
-                "doctrine/coding-standard": "^7.0",
-                "phpstan/phpstan": "^0.11",
-                "phpstan/phpstan-phpunit": "^0.11",
-                "phpstan/phpstan-strict-rules": "^0.11",
-                "phpunit/phpunit": "^7.0 || ^8.0 || ^9.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Doctrine\\Inflector\\": "lib/Doctrine/Inflector"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Guilherme Blanco",
-                    "email": "guilhermeblanco@gmail.com"
-                },
-                {
-                    "name": "Roman Borschel",
-                    "email": "roman@code-factory.org"
-                },
-                {
-                    "name": "Benjamin Eberlei",
-                    "email": "kontakt@beberlei.de"
-                },
-                {
-                    "name": "Jonathan Wage",
-                    "email": "jonwage@gmail.com"
-                },
-                {
-                    "name": "Johannes Schmitt",
-                    "email": "schmittjoh@gmail.com"
-                }
-            ],
-            "description": "PHP Doctrine Inflector is a small library that can perform string manipulations with regard to upper/lowercase and singular/plural forms of words.",
-            "homepage": "https://www.doctrine-project.org/projects/inflector.html",
-            "keywords": [
-                "inflection",
-                "inflector",
-                "lowercase",
-                "manipulation",
-                "php",
-                "plural",
-                "singular",
-                "strings",
-                "uppercase",
-                "words"
-            ],
-            "support": {
-                "issues": "https://github.com/doctrine/inflector/issues",
-                "source": "https://github.com/doctrine/inflector/tree/2.0.x"
-            },
-            "funding": [
-                {
-                    "url": "https://www.doctrine-project.org/sponsorship.html",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://www.patreon.com/phpdoctrine",
-                    "type": "patreon"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/doctrine%2Finflector",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2020-05-29T15:13:26+00:00"
-        },
-        {
             "name": "ffraenz/private-composer-installer",
             "version": "v5.0.1",
             "source": {
@@ -337,67 +242,6 @@
                 }
             ],
             "time": "2020-10-30T09:35:33+00:00"
-        },
-        {
-            "name": "log1x/acf-composer",
-            "version": "v1.5.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Log1x/acf-composer.git",
-                "reference": "a096aa3bbc86a817a6ebfa3c0848c25c7bbc633e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Log1x/acf-composer/zipball/a096aa3bbc86a817a6ebfa3c0848c25c7bbc633e",
-                "reference": "a096aa3bbc86a817a6ebfa3c0848c25c7bbc633e",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.2.5",
-                "stoutlogic/acf-builder": "^1.10"
-            },
-            "require-dev": {
-                "squizlabs/php_codesniffer": "^3.5"
-            },
-            "suggest": {
-                "log1x/modern-acf-options": "Gives ACF option pages a much needed design overhaul.",
-                "log1x/sage-directives": "Provides Sage-specific Blade directives for use with WordPress and ACF within your views."
-            },
-            "type": "package",
-            "extra": {
-                "acorn": {
-                    "providers": [
-                        "Log1x\\AcfComposer\\Providers\\AcfComposerServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Log1x\\AcfComposer\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Brandon Nifong",
-                    "email": "brandon@tendency.me"
-                }
-            ],
-            "description": "Create fields, blocks, option pages, and widgets using ACF Builder and Sage 10",
-            "support": {
-                "issues": "https://github.com/Log1x/acf-composer/issues",
-                "source": "https://github.com/Log1x/acf-composer/tree/v1.5.5"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/Log1x",
-                    "type": "github"
-                }
-            ],
-            "time": "2020-10-30T09:02:03+00:00"
         },
         {
             "name": "oscarotero/env",
@@ -994,52 +838,6 @@
                 "source": "https://github.com/soberwp/intervention/tree/master"
             },
             "time": "2021-02-08T07:24:41+00:00"
-        },
-        {
-            "name": "stoutlogic/acf-builder",
-            "version": "1.10.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/StoutLogic/acf-builder.git",
-                "reference": "1fbdb58ad46ac77d6df2549aad130854f5e69cf2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/StoutLogic/acf-builder/zipball/1fbdb58ad46ac77d6df2549aad130854f5e69cf2",
-                "reference": "1fbdb58ad46ac77d6df2549aad130854f5e69cf2",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/inflector": "^1.1|^2.0",
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "phpdocumentor/reflection-docblock": "2.*",
-                "phpunit/phpunit": "4.*",
-                "squizlabs/php_codesniffer": "^2.6"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "StoutLogic\\AcfBuilder\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "GPL-2.0+"
-            ],
-            "authors": [
-                {
-                    "name": "Steve Pfisterer",
-                    "email": "steve@stoutlogic.com"
-                }
-            ],
-            "description": "An Advanced Custom Field Configuration Builder",
-            "support": {
-                "issues": "https://github.com/StoutLogic/acf-builder/issues",
-                "source": "https://github.com/StoutLogic/acf-builder/tree/1.10.0"
-            },
-            "time": "2020-07-02T01:15:41+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
