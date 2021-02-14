@@ -3,6 +3,29 @@ require('@tinypixelco/laravel-mix-wp-blocks');
 require('laravel-mix-purgecss');
 require('laravel-mix-copy-watched');
 
+let whitelist = [
+  'rtl',
+  'home',
+  'blog',
+  'archive',
+  'date',
+  'error404',
+  'logged-in',
+  'admin-bar',
+  'no-customize-support',
+  'custom-background',
+  'wp-custom-logo',
+  'alignnone',
+  'alignright',
+  'alignleft',
+  'wp-caption',
+  'wp-caption-text',
+  'screen-reader-text',
+  'comment-list',
+  'path',
+  'svg'
+];
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -23,9 +46,11 @@ mix
   .sass('resources/assets/styles/editor.scss', 'styles')
   .purgeCss({
     extend: { content: [path.join(__dirname, 'index.php')] },
-    whitelist: require('purgecss-with-wordpress').whitelist,
+    // whitelist: require('purgecss-with-wordpress').whitelist,
+    whitelist: whitelist,
     whitelistPatterns: require('purgecss-with-wordpress').whitelistPatterns,
-  });
+  })
+  ;
 
 mix
   .js('resources/assets/scripts/app.js', 'scripts')

@@ -28,3 +28,17 @@ html {
     font-size: calc(0.5vw + 0.7rem);
   }
 }
+
+body {
+  background-color: theme-color("roto");
+}
+
+a {
+  color: theme-color("enlace");
+  transition: color $trans, background-color $trans;
+
+  &:hover {
+    color: theme-color("hover");
+    text-decoration: none;
+  }
+}

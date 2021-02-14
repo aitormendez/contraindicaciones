@@ -24,6 +24,7 @@ class App extends Composer
     {
         return [
             'siteName' => $this->siteName(),
+            'siteDescription' => $this->siteDescription(),
         ];
     }
 
@@ -35,5 +36,17 @@ class App extends Composer
     public function siteName()
     {
         return get_bloginfo('name', 'display');
+    }
+
+    /**
+     * Returns the site description.
+     *
+     * @return string
+     */
+    public function siteDescription()
+    {
+        $desc= get_bloginfo('description');
+        $output = html_entity_decode($desc);
+        return $output;
     }
 }
