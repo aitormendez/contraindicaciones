@@ -2,7 +2,11 @@
  * Header
  */
 .banner {
+  background-color: theme-color('roto');
+
   .brand {
+    padding: 1rem;
+
     a {
       color: #000;
     }
@@ -48,23 +52,55 @@
     }
   }
 
-  @include media-breakpoint-up(lg) {
+  @include media-breakpoint-up(md) {
+    position: fixed;
+
     .brand {
+      transition: padding-top $trans;
+
       .logo {
         width: 10vw;
         height: 10vw;
+        position: relative;
+        top: 0;
+        transition: top $trans, width $trans, height $trans, min-width $trans, min-height $trans;
       }
     }
 
     .nombre {
       position: relative;
       top: -0.1em;
+      transition: font-size $trans;
     }
 
     .description {
       font-size: .8rem;
+      line-height: 1.2em;
       span {
         display: block;
+      }
+      transition: line-height $trans;
+    }
+
+    &.cerrado {
+      .brand {
+        padding-top: 0rem;
+
+        .logo {
+          top: -6px;
+          width: 5vw;
+          height: 5vw;
+          min-width: 0;
+          min-height: 0;
+        }
+
+        .nombre {
+          font-size: .8rem;
+        }
+
+        .description {
+          line-height: 0em;
+        }
       }
     }
   }
