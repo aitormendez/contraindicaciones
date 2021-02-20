@@ -2,8 +2,9 @@
  * Header
  */
 .banner {
-  background-color: theme-color('roto');
+  // background-color: theme-color('roto');
   width: 100%;
+  z-index: 1000;
 
   .brand {
     padding: 1rem;
@@ -23,7 +24,7 @@
       max-height: 200px;
       max-width: 200px;
       border: 6px solid black;
-      background-color: theme-color("roto");
+      // background-color: theme-color("roto");
 
       svg {
         width: 70%;

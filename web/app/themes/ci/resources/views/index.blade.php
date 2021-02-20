@@ -10,17 +10,15 @@
     {!! get_search_form(false) !!}
   @endif
 
-
-
-  <div class="container">
-    <div class="row">
-      <section class="destacados col-md-6">
+  <div class="contenido-wrap d-flex justify-content-center">
+    <div class="contenido d-flex flex-wrap">
+      <section class="destacados">
         <header>Destacados</header>
         @while($destacados->have_posts()) @php($destacados->the_post())
           @includeFirst(['partials.content-' . get_post_type(), 'partials.content'])
         @endwhile
       </section>
-      <section class="cronológico col-md-6">
+      <section class="cronológico">
         <header>Cronológico</header>
         @while(have_posts()) @php(the_post())
           @includeFirst(['partials.content-' . get_post_type(), 'partials.content'])
