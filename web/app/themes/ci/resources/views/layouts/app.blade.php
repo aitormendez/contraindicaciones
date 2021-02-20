@@ -1,15 +1,13 @@
 @include('partials.header')
 
-<div class="container">
-  <main class="main">
-    @yield('content')
-  </main>
+<main class="main">
+  @yield('content')
+</main>
 
-  @hasSection('sidebar')
-    <aside class="sidebar">
-      @yield('sidebar')
-    </aside>
-  @endif
-</div>
+@hasSection('sidebar')
+  <aside class="sidebar">
+    @yield('sidebar')
+  </aside>
+@endif
 
 @include('partials.footer')

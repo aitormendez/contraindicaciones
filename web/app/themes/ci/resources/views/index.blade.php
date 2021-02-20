@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-  @include('partials.page-header')
 
   @if (! have_posts())
     <x-alert type="warning">
@@ -11,9 +10,24 @@
     {!! get_search_form(false) !!}
   @endif
 
-  @while(have_posts()) @php(the_post())
-    @includeFirst(['partials.content-' . get_post_type(), 'partials.content'])
-  @endwhile
+
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="destacados col-md-6">
+        <header>Destacados</header>
+        @while($destacados->have_posts()) @php($destacados->the_post())
+          @includeFirst(['partials.content-' . get_post_type(), 'partials.content'])
+        @endwhile
+      </div>
+      <div class="cronológico col-md-6">
+        <header>Cronológico</header>
+        @while(have_posts()) @php(the_post())
+          @includeFirst(['partials.content-' . get_post_type(), 'partials.content'])
+        @endwhile
+      </div>
+    </div>
+  </div>
 
   {!! get_the_posts_navigation() !!}
 @endsection
