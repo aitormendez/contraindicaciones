@@ -1,0 +1,22 @@
+.home {
+  section > {
+    header {
+      border-bottom: 1px solid #000;
+      margin-bottom: 3em;
+    }
+
+    article {
+      margin-bottom: 3em;
+
+      h2 {
+        margin-bottom: 1em;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        margin-bottom: 1em;
+      }
+    }
+  }
+}

@@ -12,20 +12,20 @@
 
 
 
-  <div class="container-fluid">
+  <div class="container">
     <div class="row">
-      <div class="destacados col-md-6">
+      <section class="destacados col-md-6">
         <header>Destacados</header>
         @while($destacados->have_posts()) @php($destacados->the_post())
           @includeFirst(['partials.content-' . get_post_type(), 'partials.content'])
         @endwhile
-      </div>
-      <div class="cronológico col-md-6">
+      </section>
+      <section class="cronológico col-md-6">
         <header>Cronológico</header>
         @while(have_posts()) @php(the_post())
           @includeFirst(['partials.content-' . get_post_type(), 'partials.content'])
         @endwhile
-      </div>
+      </section>
     </div>
   </div>
 

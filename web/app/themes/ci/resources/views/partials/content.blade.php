@@ -10,6 +10,7 @@
   </header>
 
   <div class="entry-summary">
+    @thumbnail('large')
     @php(the_excerpt())
   </div>
 </article>
