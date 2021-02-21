@@ -52,6 +52,7 @@ $(document).ready(() => {
   const solapasSidebar = {
     mostrando: 'comentarios',
     archivos: function() {
+      abrirSolapa();
       this.mostrando = 'archivos';
       solapaArchivos.removeClass("d-none");
       solapaAutores.addClass("d-none");
@@ -59,6 +60,7 @@ $(document).ready(() => {
       solapaComentarios.addClass("d-none");
     },
     autores: function() {
+      abrirSolapa();
       this.mostrando = 'archivos';
       solapaArchivos.addClass("d-none");
       solapaAutores.removeClass("d-none");
@@ -66,6 +68,7 @@ $(document).ready(() => {
       solapaComentarios.addClass("d-none");
     },
     categorias: function() {
+      abrirSolapa();
       this.mostrando = 'archivos';
       solapaArchivos.addClass("d-none");
       solapaAutores.addClass("d-none");
@@ -73,6 +76,7 @@ $(document).ready(() => {
       solapaComentarios.addClass("d-none");
     },
     comentarios: function() {
+      abrirSolapa();
       this.mostrando = 'archivos';
       solapaArchivos.addClass("d-none");
       solapaAutores.addClass("d-none");
@@ -106,6 +110,13 @@ $(document).ready(() => {
       sidebarObj.cerrar();
     }
   });
+
+  function abrirSolapa() {
+    if (sidebarObj.estado == 'cerrado') {
+      sidebarObj.abrir();
+    }
+  }
+
 
     // deslizar items menú en hover
 
