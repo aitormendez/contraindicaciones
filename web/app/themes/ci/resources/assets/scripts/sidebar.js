@@ -11,14 +11,17 @@ $(document).ready(() => {
     colabBtn = $('.colaboradores'),
     archivBtn = $('.archivos'),
     btnSide = $('#btnside'),
-    contenido = $('.contenido');
+    contenido = $('.contenido'),
+    solapaAutores = $('.widget_autores_widget'),
+    solapaArchivos = $('.widget_archive'),
+    solapaCategorias = $('.widget_categories'),
+    solapaComentarios = $('.widget_recent_comments')
+    ;
+
+  // objeto sidebar
 
   const sidebarObj = {
     estado: 'abierto',
-    archivos: 'plegado',
-    colaboradores: 'plegado',
-    comentarios: 'plegado',
-    comentarios: 'desplegado',
 
     cerrar: function() {
       this.estado = 'cerrado';
@@ -44,10 +47,53 @@ $(document).ready(() => {
     },
   }
 
+  //solapas interiores sidebar
+
+  const solapasSidebar = {
+    mostrando: 'comentarios',
+    archivos: function() {
+      this.mostrando = 'archivos';
+      solapaArchivos.removeClass("d-none");
+      solapaAutores.addClass("d-none");
+      solapaCategorias.addClass("d-none");
+      solapaComentarios.addClass("d-none");
+    },
+    autores: function() {
+      this.mostrando = 'archivos';
+      solapaArchivos.addClass("d-none");
+      solapaAutores.removeClass("d-none");
+      solapaCategorias.addClass("d-none");
+      solapaComentarios.addClass("d-none");
+    },
+    categorias: function() {
+      this.mostrando = 'archivos';
+      solapaArchivos.addClass("d-none");
+      solapaAutores.addClass("d-none");
+      solapaCategorias.removeClass("d-none");
+      solapaComentarios.addClass("d-none");
+    },
+    comentarios: function() {
+      this.mostrando = 'archivos';
+      solapaArchivos.addClass("d-none");
+      solapaAutores.addClass("d-none");
+      solapaCategorias.addClass("d-none");
+      solapaComentarios.removeClass("d-none");
+    }
+  }
+
   // botones menú seleccionan contenido sidebar
 
-  $('.archivos').click(function() {
-    console.log('click');
+  $('.nav-sidebar .archivos a').click(function() {
+    solapasSidebar.archivos();
+  });
+  $('.nav-sidebar .comentarios a').click(function() {
+    solapasSidebar.comentarios();
+  });
+  $('.nav-sidebar .colaboradores a').click(function() {
+    solapasSidebar.autores();
+  });
+  $('.nav-sidebar .secciones a').click(function() {
+    solapasSidebar.categorias();
   });
 
 
