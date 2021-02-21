@@ -18,7 +18,7 @@
           @includeFirst(['partials.content-' . get_post_type(), 'partials.content'])
         @endwhile
       </section>
-      <section class="cronológico">
+      <section class="cronológico infinite-scroll-container">
         <header>Cronológico</header>
         @while(have_posts()) @php(the_post())
           @includeFirst(['partials.content-' . get_post_type(), 'partials.content'])
