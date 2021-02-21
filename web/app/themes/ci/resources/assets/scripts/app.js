@@ -3,7 +3,8 @@
  */
 import 'jquery';
 import 'bootstrap';
-import anime from 'animejs';
+import './sidebar.js';
+// import anime from 'animejs';
 
 $(document).ready(() => {
   let viewportHeight = $(window).height(),
@@ -12,7 +13,6 @@ $(document).ready(() => {
 
   if (viewportWidth >= 768) {
     window.onscroll = function() {
-      console.log(window.scrollY);
       if (window.scrollY > 1) {
         banner.addClass('cerrado');
       } else {

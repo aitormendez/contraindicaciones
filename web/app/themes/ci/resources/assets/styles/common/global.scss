@@ -52,3 +52,12 @@ a {
 p {
   line-height: 1.2em;
 }
+
+.contenido {
+  margin-right: 0vw;
+  transition: margin-right $trans;
+
+  &.abierto {
+    margin-right: 28vw;
+  }
+}

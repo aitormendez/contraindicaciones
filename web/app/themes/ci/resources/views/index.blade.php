@@ -11,7 +11,7 @@
   @endif
 
   <div class="contenido-wrap d-flex justify-content-center">
-    <div class="contenido d-flex flex-wrap">
+    <div class="contenido d-flex flex-wrap abierto">
       <section class="destacados">
         <header>Destacados</header>
         @while($destacados->have_posts()) @php($destacados->the_post())

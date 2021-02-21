@@ -1,5 +1,8 @@
 /**
  * Header
+ * z-index:
+ * banner: 1000
+ * sidebar: 1100
  */
 .banner {
   // background-color: theme-color('roto');
@@ -28,6 +31,7 @@
 
       svg {
         width: 70%;
+        height: auto;
       }
     }
 
@@ -52,11 +56,21 @@
       li {
         border: 6px solid black;
         border-right: none;
-        padding: 2vw 3vw;
         background-color: theme-color("roto");
 
         &:last-child {
           border-right: 6px solid black;
+        }
+
+        a {
+          font-size: .9rem;
+          display: block;
+          padding: .5vw 1vw;
+
+          &:hover,
+          &:focus {
+            background-color: #fff;
+          }
         }
       }
     }
@@ -92,22 +106,6 @@
       transition: line-height $trans, top $trans;
     }
 
-    .nav-primary {
-      .nav {
-        top: 0;
-        position: fixed;
-        transform: rotate(-90deg);
-        transform-origin: bottom right;
-        right: -7px;
-
-        li {
-          border-right: 6px solid black;
-          margin-right: 1rem;
-          padding: .6em 1em;
-        }
-      }
-    }
-
     &.cerrado {
       .brand {
         padding-top: 0rem;
@@ -137,14 +135,3 @@
 }
 
 
-.nav2 {
-  position: absolute;
-  transform: rotate(-90deg);
-  transform-origin: bottom right;
-  right: -7px;
-
-  li {
-    border-right: 6px solid black;
-    margin-right: 1rem;
-  }
-}
