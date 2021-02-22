@@ -1,10 +1,5 @@
 .home {
-
   .contenido {
-    max-width: 1500px;
-    padding-right: 1rem;
-    padding-left: 1rem;
-
     section > {
       width: 100%;
 
@@ -12,29 +7,13 @@
         border-bottom: 1px solid #000;
         margin-bottom: 3em;
       }
-
-      article {
-        margin-bottom: 3em;
-
-        h2 {
-          margin-bottom: .7em;
-        }
-
-        img {
-          max-width: 100%;
-          height: auto;
-          margin-bottom: 1em;
-        }
-      }
     }
   }
 
   @include media-breakpoint-up(md) {
     .contenido > {
       section {
-        padding-top: 20vw;
         width: calc(50% - 1rem);
-        background-color: #fff;
 
         &:first-child {
           margin-right: 1rem;

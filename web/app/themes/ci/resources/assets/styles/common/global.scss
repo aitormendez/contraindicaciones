@@ -31,12 +31,6 @@ html {
 
 body {
   background-color: theme-color("roto");
-
-  @include media-breakpoint-up(md) {
-    .main {
-      // padding-top: 20vw;
-    }
-  }
 }
 
 a {
@@ -54,10 +48,42 @@ p {
 }
 
 .contenido {
+  width: 100%;
+  max-width: 1500px;
+  padding-right: 1rem;
+  padding-left: 1rem;
   margin-right: 0vw;
   transition: margin-right $trans;
 
   &.abierto {
     margin-right: 28vw;
+  }
+
+  section {
+    article {
+      margin-bottom: 7rem;
+
+      h2 {
+        margin-bottom: .7em;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        margin-bottom: 1em;
+      }
+    }
+  }
+
+
+}
+
+@include media-breakpoint-up(md) {
+  .contenido > {
+    section {
+      padding-top: 20vw;
+      width: calc(65% - 1rem);
+      background-color: #fff;
+    }
   }
 }
