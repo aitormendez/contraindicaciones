@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-  <div class="contenido-wrap d-flex justify-content-center">
-    <div class="contenido d-flex flex-wrap abierto justify-content-center">
-        @include('partials.page-header')
-    </div>
+<div class="contenido-wrap d-flex justify-content-center">
+  <div class="contenido d-flex flex-wrap abierto justify-content-center">
+      @include('partials.page-header')
   </div>
+</div>
 
   @if (! have_posts())
     <x-alert type="warning">

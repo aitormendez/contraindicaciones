@@ -1,0 +1,53 @@
+.archive {
+  &.category {
+    .icon {
+      width: 8vw;
+      height: 8vw;
+
+      &.que-pasa-aqui {
+        background-image: url("../images/que-pasa-aqui.svg");
+        background-size: contain;
+      }
+
+      &.autobombo {
+        background-image: url("../images/autobombo.svg");
+        background-size: contain;
+      }
+
+      &.critica-a-la-critica {
+        background-image: url("../images/critica-a-la-critica.svg");
+        background-size: contain;
+      }
+
+      &.delincuentes {
+        background-image: url("../images/delincuentes.svg");
+        background-size: contain;
+      }
+
+      &.difusion {
+        background-image: url("../images/difusion.svg");
+        background-size: contain;
+      }
+
+      &.idioteces {
+        background-image: url("../images/idioteces.svg");
+        background-size: contain;
+      }
+
+      &.memoria-historica {
+        background-image: url("../images/memoria-historica.svg");
+        background-size: contain;
+      }
+
+      &.pill-golding {
+        background-image: url("../images/pill-golding.svg");
+        background-size: contain;
+      }
+
+      &.weblog {
+        background-image: url("../images/weblog.svg");
+        background-size: contain;
+      }
+    }
+  }
+}

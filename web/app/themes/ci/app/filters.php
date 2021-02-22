@@ -50,3 +50,14 @@ add_action( 'pre_get_posts', function($query) {
 //     add_post_meta($entrada, 'destacado', 0);
     // update_post_meta( $entrada, 'destacado', 0 );
 // }
+
+/**
+ * eliminar category del title.
+ */
+
+add_filter( 'get_the_archive_title', function ( $title ) {
+    if( is_category() ) {
+        $title = single_cat_title( '', false );
+    }
+    return $title;
+});

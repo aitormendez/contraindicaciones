@@ -48,6 +48,10 @@ class Post extends Composer
             return __('Latest Posts', 'sage');
         }
 
+        if (is_category()) {
+            return get_the_archive_title();
+        }
+
         if (is_archive()) {
             return get_the_archive_title();
         }

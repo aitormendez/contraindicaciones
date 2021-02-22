@@ -4,8 +4,7 @@
       width: 100%;
 
       header {
-        border-bottom: 1px solid #000;
-        margin-bottom: 3em;
+        margin-bottom: 0.2rem;
       }
     }
   }
@@ -14,6 +13,7 @@
     .contenido > {
       section {
         width: calc(50% - 1rem);
+        padding-top: 20vw;
 
         &:first-child {
           margin-right: 1rem;

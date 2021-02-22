@@ -55,13 +55,20 @@ p {
   margin-right: 0vw;
   transition: margin-right $trans;
 
+  .page-header {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
   &.abierto {
     margin-right: 28vw;
   }
 
   section {
     article {
-      margin-bottom: 7rem;
+      margin-bottom: 3rem;
+      padding-top: 3rem;
+      border-top: 1px solid #000;
 
       h2 {
         margin-bottom: .7em;
@@ -75,15 +82,22 @@ p {
     }
   }
 
-
-}
-
-@include media-breakpoint-up(md) {
-  .contenido > {
-    section {
-      padding-top: 20vw;
+  @include media-breakpoint-up(md) {
+    > section {
+      padding-top: 3vw;
       width: calc(65% - 1rem);
       background-color: #fff;
     }
   }
+
+    .page-header {
+      padding-top: 20vw;
+      background-color: #fff;
+      width: calc(65% - 1rem);
+
+      h1 {
+        font-size: 1.2rem;
+      }
+    }
 }
+
