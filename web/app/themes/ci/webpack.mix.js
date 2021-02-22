@@ -44,12 +44,12 @@ mix
 mix
   .sass('resources/assets/styles/app.scss', 'styles')
   .sass('resources/assets/styles/editor.scss', 'styles')
-  .purgeCss({
-    extend: { content: [path.join(__dirname, 'index.php')] },
-    // whitelist: require('purgecss-with-wordpress').whitelist,
-    whitelist: whitelist,
-    whitelistPatterns: require('purgecss-with-wordpress').whitelistPatterns,
-  })
+  // .purgeCss({
+  //   extend: { content: [path.join(__dirname, 'index.php')] },
+  //   // whitelist: require('purgecss-with-wordpress').whitelist,
+  //   whitelist: whitelist,
+  //   whitelistPatterns: require('purgecss-with-wordpress').whitelistPatterns,
+  // })
   ;
 
 mix
