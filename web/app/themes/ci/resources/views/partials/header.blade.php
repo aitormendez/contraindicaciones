@@ -3,7 +3,7 @@
 
     <div class="row brand align-items-center flex-column flex-md-row">
       <a class="logo mr-sm-4" href="{{ home_url('/') }}">
-        @svg('images.weblog')
+        @svg('images.weblog', ['class' => 'browni'])
       </a>
       <a class="nombre mr-sm-4" href="{{ home_url('/') }}">
         {{ $siteName }}

@@ -110,7 +110,7 @@ p {
 }
 
 
-//
+// Estilos listado categorias en pág secciones y en sidebar
 
 .widget_categories ul,
 .secciones .categories {
@@ -181,4 +181,19 @@ p {
       }
     }
   }
+}
+
+@keyframes brownian {
+  0% {
+    visibility: visible;
+  }
+
+  100% {
+    visibility: visible;
+  }
+}
+
+.browniano {
+  position: relative;
+  animation: brownian 0.02s infinite;
 }

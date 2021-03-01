@@ -71,7 +71,25 @@ $(document).ready(() => {
     // });
 
     // movimiento browniano
-    $('header svg').on('animationiteration webkitAnimationIteration oanimationiteration MSAnimationIteration', function(e) {
-      $(this).css({top: Math.floor(Math.random() * 5 + 5) + 'px'},0);
-      $(this).css({left: Math.floor(Math.random() * 5) + 'px'},0);
-    });
+
+    let brownies = $('.browni');
+
+    function browni() {
+      $('.browniano').on('animationiteration webkitAnimationIteration oanimationiteration MSAnimationIteration', function(e) {
+        let deg = 0;
+        deg = deg + Math.floor(Math.random() * 40 - 20);
+        $(this).css({top: Math.floor(Math.random() * 5 - 3) + 'px'},0);
+        $(this).css({left: Math.floor(Math.random() * 5 -3) + 'px'},0);
+        $(this).css({transform: 'rotate(' + deg + 'deg)'},0);
+      });
+
+    }
+
+    brownies.mouseenter(function() {
+      $(this).addClass('browniano');
+      browni();
+    })
+
+    brownies.mouseleave(function() {
+      $(this).removeClass('browniano');
+    })
