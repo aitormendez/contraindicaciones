@@ -60,10 +60,6 @@ p {
     padding-bottom: 3rem;
   }
 
-  &.abierto {
-    margin-right: 28vw;
-  }
-
 
   article {
     width: 100%;
@@ -95,6 +91,10 @@ p {
       padding-top: 3vw;
       width: calc(65% - 1rem);
       background-color: #fff;
+    }
+
+    &.abierto {
+      margin-right: 28vw;
     }
   }
 

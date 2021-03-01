@@ -1,4 +1,4 @@
-<div class="botones">
+<div class="botones d-none d-md-flex">
   <nav class="nav-sidebar d-none d-md-block">
     @if (has_nav_menu('primary_navigation'))
       {!! wp_nav_menu([

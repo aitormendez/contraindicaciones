@@ -61,3 +61,11 @@ $(document).ready(() => {
     // main.on( 'last', function() {
     //   buttonCont.hide();
     // });
+
+
+    // hamburger
+    // -----------------------------------------------
+
+    // $('.hamburger').click(function() {
+    //   $(this).toggleClass('is-active');
+    // });

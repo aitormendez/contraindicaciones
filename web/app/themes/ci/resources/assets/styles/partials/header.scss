@@ -46,11 +46,10 @@
     }
   }
 
-  .nav-primary {
-    .menu-principal-container {
-      display: flex;
-      justify-content: center;
-    }
+  .menu-movil-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
 
     .nav {
       li {

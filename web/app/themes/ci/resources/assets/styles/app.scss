@@ -1,3 +1,6 @@
+/** librerias */
+// @import "~hamburgers/_sass/hamburgers/hamburgers";
+
 /** Config */
 @import 'config/variables';
 @import 'config/external';
@@ -15,6 +18,8 @@
 @import 'partials/sidebar';
 @import 'partials/archive';
 @import 'partials/single';
+@import 'partials/page';
+@import 'partials/author';
 
 /** Fuentes */
 @import "fonts/dino";

@@ -13,12 +13,13 @@
       </div>
     </div>
 
-    <nav class="nav-primary mt-3 d-md-none">
-      @if (has_nav_menu('primary_navigation'))
-        {!! wp_nav_menu(['theme_location' => 'primary_navigation', 'menu_class' => 'nav', 'echo' => false]) !!}
+    <nav class="nav-mobile mt-3 d-md-none">
+      @if (has_nav_menu('mobile_navigation'))
+        {!! wp_nav_menu(['theme_location' => 'mobile_navigation', 'menu_class' => 'nav', 'echo' => false]) !!}
       @endif
     </nav>
 
   </div>
+
 </header>
 

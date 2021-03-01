@@ -1,13 +1,15 @@
+{{--
+  Template Name: Archives Template
+--}}
+
 @extends('layouts.app')
 
 @section('content')
   @while(have_posts()) @php(the_post())
   <div class="contenido-wrap d-flex justify-content-center">
     <div class="contenido d-flex flex-wrap abierto">
-      <article>
-        @include('partials.page-header')
-        @includeFirst(['partials.content-page', 'partials.content'])
-      </article>
+      @include('partials.page-header')
+      @includeFirst(['partials.content-authors-page', 'partials.content'])
     </div>
   </div>
   @endwhile

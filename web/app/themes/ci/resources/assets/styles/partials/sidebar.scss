@@ -1,27 +1,28 @@
 .sidebar {
   position: fixed;
   top: 0;
-  right: 0vw;
+  right: -100vw;
   background-color: theme-color("roto");
   width: 100vw;
   height: 100vh;
   z-index: 1100;
 
-  &::before {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 3vw;
-    left: -1px;
-    height: 35vw;
-    border-left: 1px solid #000;
-  }
-
   &.cerrado {
     right: -25vw;
   }
   @include media-breakpoint-up(md) {
+    right: 0vw;
     width: 25vw;
+
+    &::before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 3vw;
+      left: -1px;
+      height: 35vw;
+      border-left: 1px solid #000;
+    }
   }
 
   .botones {

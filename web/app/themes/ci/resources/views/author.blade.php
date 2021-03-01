@@ -1,12 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="contenido-wrap d-flex justify-content-center">
-  <div class="contenido d-flex flex-wrap abierto justify-content-center">
-      @include('partials.page-header')
-  </div>
-</div>
-
   @if (! have_posts())
     <x-alert type="warning">
       {!! __('Sorry, no results were found.', 'sage') !!}
@@ -16,7 +10,8 @@
   @endif
 
   <div class="contenido-wrap d-flex justify-content-center">
-    <div class="contenido d-flex flex-wrap abierto justify-content-center">
+    <div class="contenido d-flex flex-wrap abierto">
+      @include('partials.page-header')
       <section class="infinite-scroll-container">
         @while(have_posts()) @php(the_post())
           @includeFirst(['partials.content-' . get_post_type(), 'partials.content'])
