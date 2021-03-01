@@ -15,6 +15,11 @@
         width: calc(50% - 1rem);
         padding-top: 20vw;
 
+        > header {
+          padding-right: 1rem;
+          padding-left: 1rem;
+        }
+
         &:first-child {
           margin-right: 1rem;
         }

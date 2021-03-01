@@ -71,6 +71,13 @@ p {
     padding-top: 3rem;
     border-top: 1px solid #000;
 
+    p,
+    h1,
+    h2 {
+      padding-right: 1rem;
+      padding-left: 1rem;
+    }
+
     h2 {
       margin-bottom: .7em;
     }
