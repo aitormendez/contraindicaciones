@@ -69,3 +69,9 @@ $(document).ready(() => {
     // $('.hamburger').click(function() {
     //   $(this).toggleClass('is-active');
     // });
+
+    // movimiento browniano
+    $('header svg').on('animationiteration webkitAnimationIteration oanimationiteration MSAnimationIteration', function(e) {
+      $(this).css({top: Math.floor(Math.random() * 5 + 5) + 'px'},0);
+      $(this).css({left: Math.floor(Math.random() * 5) + 'px'},0);
+    });

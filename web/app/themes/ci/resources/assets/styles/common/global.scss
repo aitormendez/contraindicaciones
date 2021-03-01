@@ -109,3 +109,76 @@ p {
     }
 }
 
+
+//
+
+.widget_categories ul,
+.secciones .categories {
+  list-style-type: none;
+
+  li {
+    margin-bottom: 1em;
+
+    &::before {
+      display: block;
+      content: "";
+      width: 4vw;
+      height: 4vw;
+      background-size: contain;
+    }
+
+    &.cat-item-3 {
+      &::before {
+        background-image: url("../images/que-pasa-aqui.svg");
+      }
+    }
+
+    &.cat-item-4 {
+      &::before {
+        background-image: url("../images/autobombo.svg");
+      }
+    }
+
+    &.cat-item-5 {
+      &::before {
+        background-image: url("../images/critica-a-la-critica.svg");
+      }
+    }
+
+    &.cat-item-6 {
+      &::before {
+        background-image: url("../images/delincuentes.svg");
+      }
+    }
+
+    &.cat-item-7 {
+      &::before {
+        background-image: url("../images/difusion.svg");
+      }
+    }
+
+    &.cat-item-8 {
+      &::before {
+        background-image: url("../images/idioteces.svg");
+      }
+    }
+
+    &.cat-item-9 {
+      &::before {
+        background-image: url("../images/memoria-historica.svg");
+      }
+    }
+
+    &.cat-item-10 {
+      &::before {
+        background-image: url("../images/pill-golding.svg");
+      }
+    }
+
+    &.cat-item-12 {
+      &::before {
+        background-image: url("../images/weblog.svg");
+      }
+    }
+  }
+}
