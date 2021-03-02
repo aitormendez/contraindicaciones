@@ -197,3 +197,34 @@ p {
   position: relative;
   animation: brownian 0.02s infinite;
 }
+
+.post {
+ position: relative;
+
+ .gota {
+  position: absolute;
+  top: 0;
+
+  .gota-rastro {
+    display: flex;
+    justify-content: center;
+    width: 1vw;
+    height: 0vw;
+
+    .rastro {
+      width: 40%;
+      background-color: theme-color("primary");
+    }
+  }
+
+  .gota-cabeza {
+    width: 1vw;
+    height: 1.2vw;
+    background-image: url('../images/gota-cabeza.svg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: top;
+  }
+}
+}
+
