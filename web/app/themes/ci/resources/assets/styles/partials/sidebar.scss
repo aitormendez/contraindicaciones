@@ -1,4 +1,5 @@
 .sidebar {
+  display: none;
   position: fixed;
   top: 0;
   right: 0vw;
@@ -22,6 +23,7 @@
   }
   @include media-breakpoint-up(md) {
     width: 25vw;
+    display: block;
   }
 
   .botones {
