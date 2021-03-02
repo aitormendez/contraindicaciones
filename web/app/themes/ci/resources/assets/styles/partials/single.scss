@@ -2,16 +2,16 @@
   @include media-breakpoint-up(md) {
     .contenido {
       max-width: 900px;
-    }
 
-    > article {
-      background-color: #fff;
-      border-top: none;
-      padding-top: 20vw;
+      > article {
+        background-color: #fff;
+        border-top: none;
+        padding-top: 20vw;
 
-      header {
-        .meta {
-          margin-top: 2rem;
+        header {
+          .meta {
+            margin-top: 2rem;
+          }
         }
       }
     }
