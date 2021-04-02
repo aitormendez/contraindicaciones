@@ -57,7 +57,7 @@
       "type": "package",
       "package": {
         "name": "advanced-custom-fields/advanced-custom-fields-pro",
-        "version": "5.9.4",
+        "version": "5.9.5",
         "type": "wordpress-plugin",
         "dist": {
           "type": "zip",
@@ -76,7 +76,7 @@
     "vlucas/phpdotenv": "^4.1.8",
     "oscarotero/env": "^2.1",
     "roots/bedrock-autoloader": "^1.0",
-    "roots/wordpress": "5.6.1",
+    "roots/wordpress": "5.7",
     "roots/wp-config": "1.0.0",
     "roots/wp-password-bcrypt": "1.0.0",
     "analogmemory/wp-sync-db": "1.6",
@@ -89,6 +89,7 @@
     "wpackagist-plugin/wp-optimize": "*",
     "wpackagist-plugin/favicon-by-realfavicongenerator": "*",
     "wpackagist-plugin/safe-svg": "*",
+    "wpackagist-plugin/akismet": "*",
     "soberwp/intervention": "dev-master"
   },
   "require-dev": {
