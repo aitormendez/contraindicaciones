@@ -90,7 +90,7 @@
     "wpackagist-plugin/favicon-by-realfavicongenerator": "*",
     "wpackagist-plugin/safe-svg": "*",
     "wpackagist-plugin/akismet": "*",
-    "soberwp/intervention": "dev-master"
+    "soberwp/intervention": "dev-main"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3.5.6",
@@ -98,7 +98,12 @@
   },
   "config": {
     "optimize-autoloader": true,
-    "preferred-install": "dist"
+    "preferred-install": "dist",
+    "allow-plugins": {
+      "composer/installers": true,
+      "ffraenz/private-composer-installer": true,
+      "roots/wordpress-core-installer": true
+    }
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
