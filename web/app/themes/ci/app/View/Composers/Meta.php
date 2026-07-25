@@ -41,7 +41,12 @@ class Meta extends Composer
         }, $cats);
 
         foreach ($items as $item) {
-            $output .= '<li class="cat"><a href="' . $item[link] . '">' . $item[name] . '</a></li>';
+            $output .= sprintf(
+                '<li class="%s"><a href="%s">%s</a></li>',
+                esc_attr('cat'),
+                esc_url($item['link']),
+                esc_html($item['name'])
+            );
         }
 
         $output .= '</ul>';

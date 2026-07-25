@@ -4,8 +4,8 @@ namespace App\View\Composers;
 
 use Roots\Acorn\View\Composer;
 
-class Secciones extends Composer {
-
+class Secciones extends Composer
+{
     protected static $views = [
         'partials.content-secciones-page',
     ];
@@ -32,14 +32,18 @@ class Secciones extends Composer {
         }, $cats);
 
         foreach ($items as $item) {
-            $output .= '<li class="cat-item cat-item-' . $item[cat_id] . '"><a href="' . $item[link] . '">' . $item[name] . '</a></li>';
+            $classes = sprintf('cat-item cat-item-%d', absint($item['cat_id']));
+
+            $output .= sprintf(
+                '<li class="%s"><a href="%s">%s</a></li>',
+                esc_attr($classes),
+                esc_url($item['link']),
+                esc_html($item['name'])
+            );
         }
 
         $output .= '</ul>';
 
         return $output;
     }
-
 }
-
-

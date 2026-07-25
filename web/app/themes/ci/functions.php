@@ -1,5 +1,8 @@
 <?php
 
+use App\Providers\ThemeServiceProvider;
+use Roots\Acorn\Application;
+
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader
@@ -11,7 +14,7 @@
 |
 */
 
-if (! file_exists($composer = __DIR__ . '/vendor/autoload.php')) {
+if (! file_exists($composer = __DIR__.'/vendor/autoload.php')) {
     wp_die(__('Error locating autoloader. Please run <code>composer install</code>.', 'sage'));
 }
 
@@ -65,4 +68,6 @@ add_theme_support('sage');
 |
 */
 
-new Roots\Acorn\Bootloader();
+Application::configure()
+    ->withProviders([ThemeServiceProvider::class])
+    ->boot();

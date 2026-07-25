@@ -6,14 +6,13 @@
 
 namespace App;
 
+use App\Support\MixManifest;
 use WP_Customize_Manager;
-
-use function Roots\asset;
 
 /**
  * Register the `.brand` selector to the blogname.
  *
- * @param  \WP_Customize_Manager $wp_customize
+ * @param  WP_Customize_Manager  $wp_customize
  * @return void
  */
 add_action('customize_register', function (WP_Customize_Manager $wp_customize) {
@@ -22,7 +21,7 @@ add_action('customize_register', function (WP_Customize_Manager $wp_customize) {
         'selector' => '.brand',
         'render_callback' => function () {
             bloginfo('name');
-        }
+        },
     ]);
 });
 
@@ -32,5 +31,11 @@ add_action('customize_register', function (WP_Customize_Manager $wp_customize) {
  * @return void
  */
 add_action('customize_preview_init', function () {
-    wp_enqueue_script('sage/customizer.js', asset('scripts/customizer.js')->uri(), ['customize-preview'], null, true);
+    wp_enqueue_script(
+        'sage/customizer.js',
+        MixManifest::fromTheme()->uri('scripts/customizer.js'),
+        ['customize-preview'],
+        null,
+        true
+    );
 });

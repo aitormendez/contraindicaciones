@@ -2,19 +2,17 @@
 
 namespace App\Fields;
 
+use Log1x\AcfComposer\Builder;
 use Log1x\AcfComposer\Field;
-use StoutLogic\AcfBuilder\FieldsBuilder;
 
 class Posts extends Field
 {
     /**
      * The field group.
-     *
-     * @return array
      */
-    public function fields()
+    public function fields(): array
     {
-        $builder = new FieldsBuilder('cat_img');
+        $builder = Builder::make('cat_img');
 
         $builder
             ->setLocation('post_type', '==', 'post');
