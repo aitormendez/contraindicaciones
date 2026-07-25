@@ -1,5 +1,6 @@
 {
   "private": true,
+  "packageManager": "yarn@1.22.19",
   "browserslist": [
     "extends @wordpress/browserslist-config"
   ],
