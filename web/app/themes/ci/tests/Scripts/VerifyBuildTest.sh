@@ -60,6 +60,16 @@ write_manifest
 write_assets
 write_metadata
 
+printf '%s\n' '<?php exit(0);' > "$dist/scripts/manifest.asset.php"
+expect_failure 'manifest.asset.php premature exit'
+write_metadata
+
+if VERIFY_BUILD_PHP_BIN=true VERIFY_BUILD_DIST_DIR="$dist" \
+  "$verifier" > "$fixture_root/output.log" 2>&1; then
+  printf 'Expected verifier failure: PHP binary override\n' >&2
+  exit 1
+fi
+
 rm "$dist/scripts/editor.js"
 expect_failure 'missing referenced destination'
 

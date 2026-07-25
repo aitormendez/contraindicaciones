@@ -3,9 +3,26 @@ set -euo pipefail
 
 theme_dir=$(cd "$(dirname "$0")/.." && pwd)
 dist_dir=${VERIFY_BUILD_DIST_DIR:-"$theme_dir/dist"}
-php_bin=${VERIFY_BUILD_PHP_BIN:-php}
 
-VERIFY_BUILD_DIST_RESOLVED="$dist_dir" "$php_bin" <<'PHP'
+if [ "${VERIFY_BUILD_PHP_BIN+x}" = x ]; then
+  printf 'verify-build: VERIFY_BUILD_PHP_BIN is not supported\n' >&2
+  exit 1
+fi
+
+if ! php_bin=$(command -v php); then
+  printf 'verify-build: PHP is not available\n' >&2
+  exit 1
+fi
+
+if [ -z "$php_bin" ] || [ ! -x "$php_bin" ]; then
+  printf 'verify-build: PHP is not available\n' >&2
+  exit 1
+fi
+
+readonly manifest_sentinel='verify-build-manifest:7'
+readonly metadata_sentinel='verify-build-metadata:valid'
+
+if ! manifest_protocol=$(VERIFY_BUILD_DIST_RESOLVED="$dist_dir" "$php_bin" <<'PHP'
 <?php
 
 declare(strict_types=1);
@@ -89,6 +106,39 @@ foreach ($requiredAssets as $asset) {
     }
 }
 
+printf("verify-build-manifest:%d\n", count($requiredAssets));
+PHP
+); then
+  exit 1
+fi
+
+if [ "$manifest_protocol" != "$manifest_sentinel" ]; then
+  printf 'verify-build: manifest validator returned an invalid protocol\n' >&2
+  exit 1
+fi
+
+if ! metadata_protocol=$(VERIFY_BUILD_DIST_RESOLVED="$dist_dir" "$php_bin" <<'PHP'
+<?php
+
+declare(strict_types=1);
+
+$fail = static function (string $message): never {
+    fwrite(STDERR, "verify-build: {$message}\n");
+    exit(1);
+};
+
+$dist = getenv('VERIFY_BUILD_DIST_RESOLVED');
+
+if (! is_string($dist) || $dist === '') {
+    $fail('the build directory is not configured');
+}
+
+$realDist = realpath(rtrim($dist, DIRECTORY_SEPARATOR));
+
+if ($realDist === false || ! is_dir($realDist)) {
+    $fail('the build directory does not exist');
+}
+
 $metadataPath = $realDist.DIRECTORY_SEPARATOR.'scripts'.DIRECTORY_SEPARATOR.'manifest.asset.php';
 
 if (! is_file($metadataPath) || ! is_readable($metadataPath) || filesize($metadataPath) === 0) {
@@ -124,8 +174,15 @@ foreach ($metadata['dependencies'] as $dependency) {
     }
 }
 
-printf(
-    "verify-build: %d assets and dependency metadata are valid\n",
-    count($requiredAssets)
-);
+fwrite(STDOUT, "verify-build-metadata:valid\n");
 PHP
+); then
+  exit 1
+fi
+
+if [ "$metadata_protocol" != "$metadata_sentinel" ]; then
+  printf 'verify-build: metadata validator returned an invalid protocol\n' >&2
+  exit 1
+fi
+
+printf 'verify-build: 7 assets and dependency metadata are valid\n'
