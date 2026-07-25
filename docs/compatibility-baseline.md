@@ -114,12 +114,11 @@ tipografía, imágenes ni adaptación responsive. La posición instantánea de l
 gotas decorativas varía por su animación y no constituye una diferencia de
 layout.
 
-Evidencias guardadas en el repositorio principal de migración, bajo
-`docs/paperclip/contraindicaciones-validation/`:
-
-- `production-desktop.png` y `local-desktop.png`;
-- `production-mobile.png` y `local-mobile.png`;
-- `local-draft-preview.png`.
+Durante la sesión se generaron y revisaron cinco capturas temporales para esta
+comparación. Tras completar la inspección se eliminaron porque contenían
+identificadores personales visibles. No se conserva evidencia visual, original
+ni saneada, y la carpeta temporal quedó vacía y fue retirada. La conclusión
+anterior es únicamente el registro textual de la revisión realizada.
 
 En páginas de entrada individual, tanto producción como local registran los
 mismos dos errores JavaScript relacionados con Infinite Scroll y un nodo DOM
@@ -153,9 +152,9 @@ confirmó el mismo problema de alcance; debe corregirse en una tarea específica
 sin mezclarlo con la compatibilidad funcional.
 
 Pint también detecta el PHP generado `dist/scripts/manifest.asset.php` cuando
-`dist` existe. La puerta se ejecutó en el orden del plan —Pint sobre fuentes y
-build después— porque `dist` está ignorado, se regenera y no pertenece al
-alcance fuente.
+`dist` existe. Como desviación aceptada de la secuencia del brief, se retiró
+`dist`, Pint acreditó los 23 ficheros fuente y después se ejecutó el build final.
+Este resultado no acredita Pint sobre el árbol generado posterior al build.
 
 ## Conclusión
 
