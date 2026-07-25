@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use Illuminate\View\View;
 use Roots\Acorn\View\Component;
 
 class Alert extends Component
@@ -36,7 +37,7 @@ class Alert extends Component
     /**
      * Get the view / contents that represent the component.
      *
-     * @return \Illuminate\View\View|string
+     * @return View|string
      */
     public function render()
     {

@@ -45,8 +45,9 @@ class App extends Composer
      */
     public function siteDescription()
     {
-        $desc= get_bloginfo('description');
+        $desc = get_bloginfo('description');
         $output = html_entity_decode($desc);
+
         return $output;
     }
 }

@@ -33,10 +33,9 @@ return [
 
     'manifests' => [
         'theme' => [
-            'strategy' => 'relative',
-            'path' => get_theme_file_path('/dist'),
-            'uri' => get_theme_file_uri('/dist'),
-            'manifest' => get_theme_file_path('/dist/mix-manifest.json'),
-        ]
-    ]
+            'path' => get_theme_file_path('dist'),
+            'url' => get_theme_file_uri('dist'),
+            'assets' => get_theme_file_path('dist/mix-manifest.json'),
+        ],
+    ],
 ];

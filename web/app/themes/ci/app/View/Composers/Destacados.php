@@ -30,21 +30,20 @@ class Destacados extends Composer
 
     /**
      * Returns posts destacados.
-     *
      */
     public function destacados()
     {
 
         $destacados_query = new WP_Query([
             'post_type' => 'post',
-            'posts_per_page'=>'5',
+            'posts_per_page' => '5',
             'order' => 'DESC',
             'meta_query' => [
                 [
-                    'key'   => 'destacado',
+                    'key' => 'destacado',
                     'value' => '1',
-                ]
-            ]
+                ],
+            ],
         ]);
 
         return $destacados_query;

@@ -74,7 +74,5 @@ return [
     |
     */
 
-    'directives' => [
-        'asset'  => Roots\Acorn\Assets\AssetDirective::class,
-    ],
+    'directives' => [],
 ];
