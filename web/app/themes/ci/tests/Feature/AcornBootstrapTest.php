@@ -7,6 +7,8 @@ it('boots Acorn with its default services and the Sage theme provider', function
     $bootstrap = <<<'PHP'
         $themePath = $argv[1];
         $GLOBALS['themePath'] = $themePath;
+        $GLOBALS['registeredFilters'] = [];
+        $GLOBALS['registeredFieldGroups'] = [];
 
         define('ABSPATH', $themePath.'/');
         define('WP_CONTENT_DIR', $themePath.'/storage');
@@ -95,6 +97,8 @@ it('boots Acorn with its default services and the Sage theme provider', function
 
         function add_filter(string $hook, callable|string $callback, int $priority = 10, int $acceptedArgs = 1): bool
         {
+            $GLOBALS['registeredFilters'][$hook][$priority][] = $callback;
+
             return true;
         }
 
@@ -116,6 +120,11 @@ it('boots Acorn with its default services and the Sage theme provider', function
         function is_admin(): bool
         {
             return false;
+        }
+
+        function acf_add_local_field_group(array $fieldGroup): void
+        {
+            $GLOBALS['registeredFieldGroups'][] = $fieldGroup;
         }
 
         require $themePath.'/vendor/autoload.php';
@@ -156,10 +165,63 @@ it('boots Acorn with its default services and the Sage theme provider', function
             Illuminate\Filesystem\FilesystemServiceProvider::class,
             Roots\Acorn\Filesystem\FilesystemServiceProvider::class,
             Roots\Acorn\View\ViewServiceProvider::class,
+            Log1x\AcfComposer\Providers\AcfComposerServiceProvider::class,
             App\Providers\ThemeServiceProvider::class,
         ] as $provider) {
             $ensure(isset($loadedProviders[$provider]), "Provider was not loaded: {$provider}");
         }
+
+        $ensure($app->bound('AcfComposer'), 'The ACF Composer binding was not registered.');
+
+        $acfComposer = $app->make('AcfComposer');
+        $ensure($acfComposer->booted(), 'ACF Composer was not booted.');
+
+        $discoveredComposers = [];
+
+        foreach ($acfComposer->composers() as $composers) {
+            foreach ($composers as $composer) {
+                $discoveredComposers[] = $composer;
+            }
+        }
+
+        $ensure(
+            in_array(App\Fields\Posts::class, $discoveredComposers, true),
+            'App\\Fields\\Posts was not discovered by ACF Composer.'
+        );
+
+        $acfInitFilters = $GLOBALS['registeredFilters']['acf/init'] ?? [];
+        $ensure($acfInitFilters !== [], 'The ACF init hook was not captured.');
+        ksort($acfInitFilters);
+
+        foreach ($acfInitFilters as $callbacks) {
+            foreach ($callbacks as $callback) {
+                $ensure(is_callable($callback), 'An ACF init callback is not callable.');
+                $callback();
+            }
+        }
+
+        $fieldGroup = null;
+
+        foreach ($GLOBALS['registeredFieldGroups'] ?? [] as $candidate) {
+            if (($candidate['key'] ?? null) === 'group_cat_img') {
+                $fieldGroup = $candidate;
+                break;
+            }
+        }
+
+        $ensure(is_array($fieldGroup), 'group_cat_img was not registered with ACF.');
+
+        $field = null;
+
+        foreach ($fieldGroup['fields'] ?? [] as $candidate) {
+            if (($candidate['key'] ?? null) === 'field_cat_img_destacado') {
+                $field = $candidate;
+                break;
+            }
+        }
+
+        $ensure(is_array($field), 'field_cat_img_destacado was not registered with ACF.');
+        $ensure(($field['name'] ?? null) === 'destacado', 'The destacado field name changed.');
 
         $blade = $app['view']->getEngineResolver()->resolve('blade')->getCompiler();
         $ensure(array_key_exists('asset', $blade->getCustomDirectives()), 'The asset Blade directive was not registered.');

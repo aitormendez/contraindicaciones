@@ -1,6 +1,12 @@
-/
-/wp/wp-login.php
-/?s=arte
-/feed/
-/wp-json/
-/robots.txt
+# label<TAB>path<TAB>final-status<TAB>literal-content-marker
+home	/	200	class="home
+login	/wp/wp-login.php	200	id="loginform"
+search	/?s=arte	200	class="search
+feed	/feed/	200	<rss
+rest	/wp-json/	200	"namespaces"
+robots	/robots.txt	200	User-agent
+post	/?p=13061	200	postid-13061
+page	/?page_id=5051	200	page-id-5051
+author	/?author=5	200	author-5
+category	/?cat=3	200	category-3
+date	/?m=202602	200	class="archive date

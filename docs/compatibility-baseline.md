@@ -151,15 +151,77 @@ incidencias de estilo ya inventariadas en la Tarea 2. La ejecución adicional
 confirmó el mismo problema de alcance; debe corregirse en una tarea específica
 sin mezclarlo con la compatibilidad funcional.
 
-Pint también detecta el PHP generado `dist/scripts/manifest.asset.php` cuando
-`dist` existe. Como desviación aceptada de la secuencia del brief, se retiró
-`dist`, Pint acreditó los 23 ficheros fuente y después se ejecutó el build final.
-Este resultado no acredita Pint sobre el árbol generado posterior al build.
+El hallazgo de Pint sobre `dist/scripts/manifest.asset.php` quedó resuelto con
+la exclusión explícita de `dist` en `web/app/themes/ci/pint.json`. La
+revalidación final acreditó los mismos 23 ficheros fuente tanto antes como
+después de generar el árbol `dist`.
+
+## Revalidación de correcciones finales
+
+El 26 de julio de 2026 se repitió la puerta desde la base
+`14aa012114e2303767e2b34af29702c433edec07` con un volcado nuevo de producción
+obtenido por SSH de solo lectura. No fue necesario copiar uploads: las pruebas
+añadidas no dependían de medios. El volcado se importó en una MariaDB 10.11
+privada, WordPress se ejecutó con PHP 8.3.32 y el único puerto publicado por el
+entorno fue el de la web en loopback.
+
+La matriz HTTP persistente comprobó código final y marcador literal en once
+rutas: portada, login, búsqueda, feed, REST, robots, entrada, página, autor,
+categoría y archivo por fecha. Las seis rutas directas terminaron sin
+redirecciones; las cinco rutas representativas de contenido resolvieron una
+redirección canónica y terminaron en `200`. El arnés independiente también
+demostró seguimiento de redirecciones, fallo por marcador ausente y timeout
+acotado.
+
+La integración ACF verificó en dos niveles:
+
+- el bootstrap aislado acreditó el proveedor de ACF Composer, su binding, el
+  descubrimiento de `App\\Fields\\Posts` y el registro de `group_cat_img` con
+  `field_cat_img_destacado` durante `acf/init`;
+- en WordPress real se creó una entrada sintética, se guardó y recargó el valor
+  `1`, se comprobó su meta y su inclusión en la consulta de destacados, se
+  guardó y recargó `0`, se comprobó su exclusión y se eliminó la entrada. El
+  recuento final de esa entrada fue cero.
+
+El build se ejecutó con la imagen exacta
+`node:14.21.3-bullseye@sha256:9b60cdcee9c6a27227689ebf4e7dd422ff195e978ffec360db5c0b3a05e20452`
+para `linux/amd64`. El verificador parseó el JSON, validó los siete assets
+consumidos, sus destinos físicos no vacíos y la estructura de
+`manifest.asset.php`. Sus fixtures fallaron ante un destino ausente, un valor
+JSON no textual y metadata inválida, y pasaron con el artefacto completo.
+
+La batería final terminó con código `0` en:
+
+- `composer validate --strict`, auditoría, requisitos de plataforma,
+  incompatibilidades con PHP 8.3 y simulación de instalación, tanto en Bedrock
+  como en el tema;
+- Pest, con 3 tests y 6 aserciones, y Pint/`composer lint`, con 23 ficheros,
+  antes y después del build;
+- lint PHP de 33 ficheros, sintaxis de los scripts shell, build por digest,
+  verificador de assets, fixtures del verificador y fixtures del smoke;
+- las once rutas reales, la integración funcional ACF y la revisión limpia de
+  logs de WordPress, Sage y servidor.
+
+Como controles dirigidos de la deuda menor, el filtro legacy de indexación
+continuó activo y `blog_public` resolvió a `0`; el paquete
+`roots/bedrock-disallow-indexing` siguió inerte al no definirse
+`DISALLOW_INDEXING`. The SEO Framework arrancó, conservó sus ajustes y generó
+canonical, `noindex` y `/sitemap.xml` válido. No se observó un fallo de runtime
+en SEO ni ACF Composer, pero se mantiene el riesgo de soporte declarado por
+terceros para WordPress 7 y Acorn 6.
+
+El post sintético, los contenedores, redes, volumen anónimo, imagen de runtime,
+volcado y temporales de esta revalidación se destruyeron al terminar. Solo se
+conserva evidencia textual saneada. No se ejecutó Trellis: antes del primer
+deploy sigue siendo obligatorio implementar y probar la autenticación efímera
+de Composer, su limpieza en un bloque `always` y la ausencia de `auth.json` en
+todos los releases.
 
 ## Conclusión
 
-La rama es instalable y ejecutable con PHP 8.3 y supera la puerta integrada
-definida para iniciar el plan de infraestructura. Quedan como riesgos aceptados
-la validación posterior de HTTPS/Nginx/Trellis, los avisos del toolchain legacy,
-el alcance incorrecto del PHPCS global y los errores JavaScript preexistentes
-de las páginas individuales.
+La rama de aplicación es instalable y ejecutable con PHP 8.3 y supera la puerta
+integrada corregida. Quedan como riesgos aceptados los avisos del toolchain
+legacy, el alcance incorrecto del PHPCS global, los errores JavaScript
+preexistentes de las páginas individuales y el soporte aún no declarado por
+terceros. La infraestructura no está autorizada para su primer despliegue hasta
+implementar y validar la puerta de secretos descrita en el plan de cutover.
