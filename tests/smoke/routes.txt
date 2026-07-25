@@ -1,0 +1,6 @@
+/
+/wp/wp-login.php
+/?s=arte
+/feed/
+/wp-json/
+/robots.txt
