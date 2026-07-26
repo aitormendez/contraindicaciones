@@ -9,8 +9,9 @@ chmod 700 "$fixture_root"
 trap 'rm -rf -- "$fixture_root"' EXIT
 
 fake_bin="$fixture_root/fake bin"
+without_lsof_bin="$fixture_root/fake bin without lsof"
 fake_theme="$fixture_root/theme with spaces"
-mkdir -p "$fake_bin" "$fake_theme/scripts"
+mkdir -p "$fake_bin" "$without_lsof_bin" "$fake_theme/scripts"
 ln -s "$launcher" "$fake_theme/scripts/hot-development.sh"
 
 docker_args="$fixture_root/docker-args"
@@ -55,6 +56,9 @@ exit 1
 EOF
 
 chmod +x "$fake_bin/docker" "$fake_bin/getent" "$fake_bin/dscacheutil" "$fake_bin/lsof"
+ln -s "$fake_bin/docker" "$without_lsof_bin/docker"
+ln -s "$fake_bin/getent" "$without_lsof_bin/getent"
+ln -s "$fake_bin/dscacheutil" "$without_lsof_bin/dscacheutil"
 
 fail() {
   printf '%s\n' "$1" >&2
@@ -166,7 +170,10 @@ expect_abort hmr-occupied env FAKE_OCCUPIED_PORT=8081 PATH="$fake_bin:$PATH" DOC
 expect_abort browsersync-occupied env FAKE_OCCUPIED_PORT=3000 PATH="$fake_bin:$PATH" DOCKER_ARGS="$docker_args" DOCKER_CALLS="$docker_calls" GETENT_ARGS="$getent_args" DSCACHEUTIL_ARGS="$dscacheutil_args" "$fake_theme/scripts/hot-development.sh"
 expect_abort non-numeric-port env HMR_PORT=invalid PATH="$fake_bin:$PATH" DOCKER_ARGS="$docker_args" DOCKER_CALLS="$docker_calls" GETENT_ARGS="$getent_args" DSCACHEUTIL_ARGS="$dscacheutil_args" "$fake_theme/scripts/hot-development.sh"
 expect_abort reserved-port env HMR_PORT=1023 PATH="$fake_bin:$PATH" DOCKER_ARGS="$docker_args" DOCKER_CALLS="$docker_calls" GETENT_ARGS="$getent_args" DSCACHEUTIL_ARGS="$dscacheutil_args" "$fake_theme/scripts/hot-development.sh"
+expect_abort out-of-range-port env HMR_PORT=65536 PATH="$fake_bin:$PATH" DOCKER_ARGS="$docker_args" DOCKER_CALLS="$docker_calls" GETENT_ARGS="$getent_args" DSCACHEUTIL_ARGS="$dscacheutil_args" "$fake_theme/scripts/hot-development.sh"
 expect_abort invalid-browsersync-port env BROWSERSYNC_PORT=invalid PATH="$fake_bin:$PATH" DOCKER_ARGS="$docker_args" DOCKER_CALLS="$docker_calls" GETENT_ARGS="$getent_args" DSCACHEUTIL_ARGS="$dscacheutil_args" "$fake_theme/scripts/hot-development.sh"
 expect_abort matching-ports env HMR_PORT=8081 BROWSERSYNC_PORT=8081 PATH="$fake_bin:$PATH" DOCKER_ARGS="$docker_args" DOCKER_CALLS="$docker_calls" GETENT_ARGS="$getent_args" DSCACHEUTIL_ARGS="$dscacheutil_args" "$fake_theme/scripts/hot-development.sh"
+expect_abort missing-lsof env PATH="$without_lsof_bin:/usr/bin:/bin" DOCKER_ARGS="$docker_args" DOCKER_CALLS="$docker_calls" GETENT_ARGS="$getent_args" DSCACHEUTIL_ARGS="$dscacheutil_args" "$fake_theme/scripts/hot-development.sh"
+grep -Fqx 'lsof is required to check HMR and BrowserSync ports' "$fixture_root/missing-lsof.log" || fail 'Missing lsof diagnostic'
 
 printf 'hot-development fixtures: ok\n'

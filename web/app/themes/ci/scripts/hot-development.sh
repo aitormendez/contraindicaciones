@@ -43,6 +43,10 @@ assert_port_is_free() {
   fi
 }
 
+assert_lsof_is_available() {
+  command -v lsof >/dev/null 2>&1 || fail 'lsof is required to check HMR and BrowserSync ports'
+}
+
 resolve_host_ipv4() {
   local ip
 
@@ -70,6 +74,7 @@ if ! host_ip=$(resolve_host_ipv4); then
 fi
 
 is_ipv4 "$host_ip" || fail "Unable to resolve $development_host to an IPv4 address"
+assert_lsof_is_available
 assert_port_is_free "$hmr_port"
 assert_port_is_free "$browsersync_port"
 
