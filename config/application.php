@@ -11,6 +11,8 @@
 use Roots\WPConfig\Config;
 use function Env\env;
 
+Env\Env::$options |= Env\Env::LOCAL_FIRST;
+
 /**
  * Directory containing all of the site's files
  *
@@ -28,7 +30,11 @@ $webroot_dir = $root_dir . '/web';
 /**
  * Use Dotenv to set required environment variables and load .env file in root
  */
-$dotenv = Dotenv\Dotenv::createImmutable($root_dir);
+$repository = Dotenv\Repository\RepositoryBuilder::createWithDefaultAdapters()
+    ->addAdapter(Dotenv\Repository\Adapter\PutenvAdapter::class)
+    ->immutable()
+    ->make();
+$dotenv = Dotenv\Dotenv::create($repository, $root_dir);
 if (file_exists($root_dir . '/.env')) {
     $dotenv->load();
     $dotenv->required(['WP_HOME', 'WP_SITEURL']);
