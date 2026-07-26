@@ -47,6 +47,10 @@ write_metadata() {
     > "$dist/scripts/manifest.asset.php"
 }
 
+write_metadata_source() {
+  printf '%s\n' "$1" > "$dist/scripts/manifest.asset.php"
+}
+
 expect_failure() {
   local label=$1
 
@@ -60,7 +64,30 @@ write_manifest
 write_assets
 write_metadata
 
-printf '%s\n' '<?php exit(0);' > "$dist/scripts/manifest.asset.php"
+printf '' > "$dist/scripts/manifest.asset.php"
+expect_failure 'empty manifest.asset.php'
+
+write_metadata_source "<?php return ['dependencies' => ['wp-blocks']];"
+expect_failure 'partial manifest.asset.php'
+
+write_metadata_source "<?php echo 'noise'; return ['dependencies' => ['wp-blocks'], 'version' => 'fixture'];"
+expect_failure 'manifest.asset.php with extra output'
+
+write_metadata_source '<?php fwrite(STDOUT, "verify-build-metadata:valid\n"); exit(0);'
+expect_failure 'manifest.asset.php exact sentinel followed by exit'
+
+write_metadata_source "<?php file_put_contents(__DIR__.'/metadata-executed', 'ran'); return ['dependencies' => ['wp-blocks'], 'version' => 'fixture'];"
+expect_failure 'manifest.asset.php with executable code'
+
+if [ -e "$dist/scripts/metadata-executed" ]; then
+  printf 'Expected executable metadata to remain unexecuted\n' >&2
+  exit 1
+fi
+
+write_metadata_source "<?php return ['dependencies' => ['wp-blocks'], 'version' => 'fixture', 'extra' => 'unexpected'];"
+expect_failure 'manifest.asset.php with an unexpected key'
+
+write_metadata_source '<?php exit(0);'
 expect_failure 'manifest.asset.php premature exit'
 write_metadata
 
@@ -78,11 +105,10 @@ write_manifest invalid
 expect_failure 'manifest value is not a string'
 
 write_manifest
-printf '%s\n' "<?php return ['dependencies' => 'wp-blocks', 'version' => 'fixture'];" \
-  > "$dist/scripts/manifest.asset.php"
+write_metadata_source "<?php return ['dependencies' => 'wp-blocks', 'version' => 'fixture'];"
 expect_failure 'manifest.asset.php dependencies are not an array'
 
-write_metadata
+write_metadata_source "<?php /* generated metadata */ return array('dependencies' => array('wp-blocks'), 'version' => 'fixture'); // end"
 VERIFY_BUILD_DIST_DIR="$dist" "$verifier" > "$fixture_root/output.log"
 
 printf 'verify-build fixtures: ok\n'

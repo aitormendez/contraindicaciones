@@ -145,21 +145,184 @@ if (! is_file($metadataPath) || ! is_readable($metadataPath) || filesize($metada
     $fail('scripts/manifest.asset.php is missing, unreadable, or empty');
 }
 
-set_error_handler(static function (int $severity, string $message): never {
-    throw new ErrorException($message, 0, $severity);
-});
+$source = file_get_contents($metadataPath);
+
+if (! is_string($source) || $source === '') {
+    $fail('scripts/manifest.asset.php could not be read');
+}
 
 try {
-    $metadata = require $metadataPath;
-} catch (Throwable $exception) {
-    $fail('scripts/manifest.asset.php could not be loaded');
-} finally {
-    restore_error_handler();
+    $rawTokens = token_get_all($source, TOKEN_PARSE);
+} catch (ParseError $exception) {
+    $fail('scripts/manifest.asset.php is not valid PHP syntax');
+}
+
+$allowedTokenIds = [
+    T_OPEN_TAG,
+    T_RETURN,
+    T_ARRAY,
+    T_CONSTANT_ENCAPSED_STRING,
+    T_DOUBLE_ARROW,
+    T_WHITESPACE,
+    T_COMMENT,
+    T_DOC_COMMENT,
+];
+$allowedCharacters = ['[', ']', '(', ')', ',', ';'];
+$tokens = [];
+
+foreach ($rawTokens as $token) {
+    if (is_array($token)) {
+        [$tokenId] = $token;
+
+        if (in_array($tokenId, [T_WHITESPACE, T_COMMENT, T_DOC_COMMENT], true)) {
+            continue;
+        }
+
+        if (! in_array($tokenId, $allowedTokenIds, true)) {
+            $fail('scripts/manifest.asset.php contains executable or unsupported syntax');
+        }
+    } elseif (! in_array($token, $allowedCharacters, true)) {
+        $fail('scripts/manifest.asset.php contains executable or unsupported syntax');
+    }
+
+    $tokens[] = $token;
+}
+
+$position = 0;
+$isToken = static fn (mixed $token, int $tokenId): bool => is_array($token) && $token[0] === $tokenId;
+$isCharacter = static fn (mixed $token, string $character): bool => is_string($token) && $token === $character;
+$decodeString = static function (string $literal) use ($fail): string {
+    $length = strlen($literal);
+
+    if ($length < 2) {
+        $fail('scripts/manifest.asset.php contains an invalid string literal');
+    }
+
+    $quote = $literal[0];
+    $value = substr($literal, 1, -1);
+
+    if (($quote !== "'" && $quote !== '"') || $literal[$length - 1] !== $quote) {
+        $fail('scripts/manifest.asset.php contains an invalid string literal');
+    }
+
+    if (preg_match('/\\A[A-Za-z0-9_.\\/@:+-]*\\z/D', $value) !== 1) {
+        $fail('scripts/manifest.asset.php contains an unsupported string literal');
+    }
+
+    return $value;
+};
+
+$parseValue = null;
+$parseValue = static function () use (
+    &$parseValue,
+    &$position,
+    $tokens,
+    $isToken,
+    $isCharacter,
+    $decodeString,
+    $fail
+): array|string {
+    $token = $tokens[$position] ?? null;
+
+    if ($isToken($token, T_CONSTANT_ENCAPSED_STRING)) {
+        $position++;
+
+        return $decodeString($token[1]);
+    }
+
+    if ($isCharacter($token, '[')) {
+        $closingCharacter = ']';
+        $position++;
+    } elseif ($isToken($token, T_ARRAY)) {
+        $position++;
+
+        if (! $isCharacter($tokens[$position] ?? null, '(')) {
+            $fail('scripts/manifest.asset.php contains an invalid array literal');
+        }
+
+        $closingCharacter = ')';
+        $position++;
+    } else {
+        $fail('scripts/manifest.asset.php must contain only arrays and string literals');
+    }
+
+    $value = [];
+
+    if ($isCharacter($tokens[$position] ?? null, $closingCharacter)) {
+        $position++;
+
+        return $value;
+    }
+
+    while (true) {
+        $entry = $parseValue();
+
+        if ($isToken($tokens[$position] ?? null, T_DOUBLE_ARROW)) {
+            if (! is_string($entry)) {
+                $fail('scripts/manifest.asset.php array keys must be string literals');
+            }
+
+            $position++;
+
+            if (array_key_exists($entry, $value)) {
+                $fail('scripts/manifest.asset.php contains a duplicate array key');
+            }
+
+            $value[$entry] = $parseValue();
+        } else {
+            $value[] = $entry;
+        }
+
+        if ($isCharacter($tokens[$position] ?? null, ',')) {
+            $position++;
+
+            if ($isCharacter($tokens[$position] ?? null, $closingCharacter)) {
+                $position++;
+
+                return $value;
+            }
+
+            continue;
+        }
+
+        if (! $isCharacter($tokens[$position] ?? null, $closingCharacter)) {
+            $fail('scripts/manifest.asset.php contains an invalid array literal');
+        }
+
+        $position++;
+
+        return $value;
+    }
+};
+
+if (! $isToken($tokens[$position] ?? null, T_OPEN_TAG)) {
+    $fail('scripts/manifest.asset.php must begin with a PHP opening tag');
+}
+
+$position++;
+
+if (! $isToken($tokens[$position] ?? null, T_RETURN)) {
+    $fail('scripts/manifest.asset.php must contain exactly one return statement');
+}
+
+$position++;
+$metadata = $parseValue();
+
+if (! $isCharacter($tokens[$position] ?? null, ';')) {
+    $fail('scripts/manifest.asset.php return statement must end with a semicolon');
+}
+
+$position++;
+
+if ($position !== count($tokens)) {
+    $fail('scripts/manifest.asset.php contains statements after its return value');
 }
 
 if (
     ! is_array($metadata) ||
-    ! isset($metadata['dependencies'], $metadata['version']) ||
+    count($metadata) !== 2 ||
+    ! array_key_exists('dependencies', $metadata) ||
+    ! array_key_exists('version', $metadata) ||
     ! is_array($metadata['dependencies']) ||
     ! array_is_list($metadata['dependencies']) ||
     ! is_string($metadata['version']) ||

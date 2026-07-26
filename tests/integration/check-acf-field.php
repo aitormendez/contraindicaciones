@@ -18,6 +18,9 @@ $reportFailure = static function (Throwable $failure): never {
     throw $failure;
 };
 
+$runMetaKey = '_contra_acf_test_run';
+$runId = null;
+
 try {
     $ensure(
         getenv('CONTRA_ALLOW_EPHEMERAL_TESTS') === '1',
@@ -29,6 +32,15 @@ try {
     $ensure(
         in_array($homeHost, ['127.0.0.1', 'localhost'], true),
         'Refusing to run against a non-loopback WordPress origin.'
+    );
+
+    $configuredRunId = getenv('CONTRA_ACF_RUN_ID');
+    $runId = $configuredRunId === false || $configuredRunId === ''
+        ? bin2hex(random_bytes(16))
+        : $configuredRunId;
+    $ensure(
+        is_string($runId) && preg_match('/\A[a-f0-9]{32}\z/D', $runId) === 1,
+        'CONTRA_ACF_RUN_ID must be exactly 32 lowercase hexadecimal characters.'
     );
 
     $application = app();
@@ -63,6 +75,7 @@ try {
         'post_status' => 'publish',
         'post_title' => 'acf-field-verification',
         'post_content' => 'ephemeral functional verification',
+        'meta_input' => [$runMetaKey => $runId],
     ], true);
 
     if (is_int($insertedPost)) {
@@ -71,10 +84,16 @@ try {
 
     $ensure(! is_wp_error($insertedPost), 'The ephemeral post could not be created.');
     $ensure(is_int($postId) && $postId > 0, 'The ephemeral post ID is invalid.');
+    $ensure(get_post_type($postId) === 'post', 'The ephemeral post type is invalid.');
+    $storedRunId = (string) get_post_meta($postId, $runMetaKey, true);
+    $ensure(
+        is_string($runId) && hash_equals($runId, $storedRunId),
+        'The ephemeral post run identity was not persisted.'
+    );
 
     $ensure(
         getenv('CONTRA_ACF_FORCE_FAILURE_AFTER_CREATE') !== '1',
-        'Forced failure after ephemeral post creation.'
+        'Forced failure after tagged ephemeral post creation.'
     );
 
     update_field('field_cat_img_destacado', 1, $postId);
@@ -109,6 +128,12 @@ try {
 } finally {
     if (is_int($postId) && $postId > 0) {
         try {
+            $storedRunId = (string) get_post_meta($postId, $runMetaKey, true);
+            $ensure(get_post_type($postId) === 'post', 'Refusing to delete an unexpected post type.');
+            $ensure(
+                is_string($runId) && hash_equals($runId, $storedRunId),
+                'Refusing to delete a post with a different run identity.'
+            );
             wp_delete_post($postId, true);
             $ensure(get_post_status($postId) === false, 'The ephemeral post was not deleted.');
         } catch (Throwable $caughtCleanupFailure) {
