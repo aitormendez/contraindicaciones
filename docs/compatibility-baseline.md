@@ -217,6 +217,26 @@ deploy sigue siendo obligatorio implementar y probar la autenticación efímera
 de Composer, su limpieza en un bloque `always` y la ausencia de `auth.json` en
 todos los releases.
 
+## HMR local reproducible
+
+El tema dispone de `web/app/themes/ci/scripts/hot-development.sh` para iniciar
+Laravel Mix HMR de forma reproducible con la imagen inmutable
+`node:14.21.3-bullseye@sha256:9b60cdcee9c6a27227689ebf4e7dd422ff195e978ffec360db5c0b3a05e20452`.
+El launcher resuelve `contraindicaciones.test` antes de arrancar, incorpora esa
+IP al contenedor mediante `--add-host` y publica HMR y BrowserSync únicamente
+en `127.0.0.1` (por defecto, los puertos `8081` y `3000`).
+
+`HMR_PORT` y `BROWSERSYNC_PORT` permiten cambiar esos puertos siempre que sean
+enteros distintos entre `1024` y `65535`; el segundo se propaga a la
+configuración explícita de BrowserSync, que conserva como proxy
+`contraindicaciones.test`. El launcher aborta si la resolución falla o si un
+puerto ya está escuchando, antes de ejecutar Docker.
+
+El arnés `web/app/themes/ci/tests/Scripts/HotDevelopmentTest.sh` usa binarios
+falsos para Docker, DNS y `lsof`. Acredita el digest, los argumentos, las
+publicaciones loopback, la ruta con espacios, la propagación de BrowserSync y
+los abortos de preflight sin ejecutar Docker ni ocupar puertos reales.
+
 ## Conclusión
 
 La rama de aplicación es instalable y ejecutable con PHP 8.3 y supera la puerta

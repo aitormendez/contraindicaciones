@@ -3,6 +3,8 @@ require('@tinypixelco/laravel-mix-wp-blocks');
 require('laravel-mix-purgecss');
 require('laravel-mix-copy-watched');
 
+const browserSyncPort = Number(process.env.BROWSERSYNC_PORT || '3000');
+
 let whitelist = [
   'rtl',
   'home',
@@ -39,7 +41,10 @@ let whitelist = [
 
 mix
   .setPublicPath('./dist')
-  .browserSync('contraindicaciones.test');
+  .browserSync({
+    proxy: 'contraindicaciones.test',
+    port: browserSyncPort,
+  });
 
 mix
   .sass('resources/assets/styles/app.scss', 'styles')
